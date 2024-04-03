@@ -96,11 +96,22 @@ namespace Task_Management.ViewModels
         {
             if (task != null)
             {
-                task.IsCompleted = !task.IsCompleted;
-                await _databaseService.UpdateTaskAsync(task); // Update the task's completion status in the database
-                LoadTasks(); // Reload tasks to reflect changes
+                bool confirmCompletion = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Task Completion",
+                    "Have you completed this task?",
+                    "Yes",
+                    "No"
+                );
+
+                if (confirmCompletion)
+                {
+                    task.IsCompleted = !task.IsCompleted;
+                    await _databaseService.UpdateTaskAsync(task); // Update the task's completion status in the database
+                    LoadTasks(); // Reload tasks to reflect changes
+                }
             }
         }
+
 
         private async Task ScheduleReminders(TaskItem task)
         {

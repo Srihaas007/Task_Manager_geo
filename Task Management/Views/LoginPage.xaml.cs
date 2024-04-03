@@ -10,27 +10,30 @@ public partial class LoginPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
 
-        MessagingCenter.Subscribe<LoginViewModel, string>(this, "LoginAlert", (sender, alert) =>
-        {
-            DisplayAlert("Login Error", alert, "OK");
-        });
-    }
+            MessagingCenter.Subscribe<LoginViewModel, string>(this, "LoginAlert", (sender, alert) =>
+            {
+                DisplayAlert("Login Error", alert, "OK");
+            });
 
-    protected override void OnDisappearing()
+
+        }
+
+        protected override void OnDisappearing()
     {
         base.OnDisappearing();
         MessagingCenter.Unsubscribe<LoginViewModel, string>(this, "LoginAlert");
     }
 
-    protected async override void OnAppearing()
-    {
-        base.OnAppearing();
-        var userId = await SecureStorage.GetAsync("userId");
-        if (!string.IsNullOrEmpty(userId))
+        protected async override void OnAppearing()
         {
-            // User is logged in, navigate to the HomePage
-            await Shell.Current.GoToAsync("//HomePage");
+            base.OnAppearing();
+            var userId = await SecureStorage.GetAsync("userId");
+            if (!string.IsNullOrEmpty(userId))
+            {
+                // User is logged in, navigate to the HomePage
+                await Shell.Current.GoToAsync("//HomePage");
+            }
         }
+
     }
-}
 }

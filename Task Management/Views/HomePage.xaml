@@ -39,12 +39,14 @@
                                 <Label Text="{Binding DueTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" FontSize="Small" FontAttributes="Italic"/>
                             </StackLayout>
                         </Frame>
-                        <!-- Checkbox for task completion -->
                         <CheckBox Grid.Column="1"
                           VerticalOptions="Center"
                           HorizontalOptions="End"
                           IsChecked="{Binding IsCompleted, Mode=TwoWay}"
-                          Color="#2196F3" />
+                          Color="#2196F3"
+                          CheckedChanged="CheckBox_CheckedChanged" />
+
+
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

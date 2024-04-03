@@ -8,21 +8,21 @@ namespace Task_Management.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private string username;
-        private string password;
+        private string _username;
+        private string _password;
         private readonly DatabaseService _databaseService;
         private readonly AuthenticationService _authenticationService;
 
         public string Username
         {
-            get => username;
-            set => SetProperty(ref username, value);
+            get => _username;
+            set => SetProperty(ref _username, value);
         }
 
         public string Password
         {
-            get => password;
-            set => SetProperty(ref password, value);
+            get => _password;
+            set => SetProperty(ref _password, value);
         }
 
         public ICommand LoginCommand { get; }
@@ -51,12 +51,11 @@ namespace Task_Management.ViewModels
                 return;
             }
 
-            // Correctly passing the userId to the LogIn method.
             _authenticationService.LogIn(user.Id);
 
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await Shell.Current.GoToAsync("//HomePage");
+                await Shell.Current.GoToAsync("//HomePage"); // Navigate to MainPage instead of HomePage
             });
         }
     }

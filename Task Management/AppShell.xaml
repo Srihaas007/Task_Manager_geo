@@ -1,10 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Shell x:Class="Task_Management.AppShell"
-       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:views="clr-namespace:Task_Management.Views"
-       xmlns:local="clr-namespace:Task_Management"
-       xmlns:vm="clr-namespace:Task_Management.ViewModels">
+﻿<Shell
+    x:Class="Task_Management.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Task_Management.Views"
+    xmlns:vm="clr-namespace:Task_Management.ViewModels">
 
     <Shell.Resources>
         <ResourceDictionary>
@@ -24,26 +23,23 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- Only 'Main' is used for FlyoutItem and it's set to invisible by default. -->
-    <FlyoutItem Title="Main" Route="MainPage" IsVisible="False">
-        <ShellContent Route="MainPage" ContentTemplate="{DataTemplate views:MainPage}" />
-    </FlyoutItem>
+    <!-- Main page -->
+    <ShellContent Route="MainPage" ContentTemplate="{DataTemplate views:MainPage}" />
 
-    <!-- Login and Register pages should not be inside a FlyoutItem if they need to be accessed without login -->
+    <!-- Login page -->
     <ShellContent Title="Login" Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- Registration page -->
     <ShellContent Title="Register" Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
-    
-    <!-- CustomDateTimePickerPage should not appear in the flyout menu and is likely used in a modal or navigation context -->
+
+    <!-- CustomDateTimePickerPage should not appear in the flyout menu -->
     <ShellContent
         Title="CustomDateTimePickerPage"
         Route="CustomDateTimePickerPage"
         ContentTemplate="{DataTemplate views:CustomDateTimePickerPage}"
         IsVisible="False" />
-    <ShellContent
-      Title="Home"
-      IsVisible="{Binding IsUserLoggedIn}"
-      Route="HomePage"
-      ContentTemplate="{DataTemplate views:HomePage}" />
+    
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
 
 
 </Shell>

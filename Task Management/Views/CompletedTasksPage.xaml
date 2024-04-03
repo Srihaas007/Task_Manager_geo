@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Task_Management.Views.CompletedTasksPage"
+             xmlns:vm="clr-namespace:Task_Management.ViewModels"
+             Title="CompletedTasksPage">
+    
+    <CollectionView ItemsSource="{Binding CompletedTasks}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Grid Padding="10" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Frame Grid.Column="0" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"/>
+                            <Label Text="{Binding Detail}" FontSize="Small"/>
+                            <Label Text="{Binding DueTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" FontSize="Small" FontAttributes="Italic"/>
+                        </StackLayout>
+                    </Frame>
+                    <Image Grid.Column="1"
+               Source="checkmark_circle.png" 
+               VerticalOptions="Center"
+               HorizontalOptions="End"
+               IsVisible="{Binding IsCompleted}"
+               WidthRequest="30"
+               HeightRequest="30"/>
+                </Grid>
+            </DataTemplate>
+
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

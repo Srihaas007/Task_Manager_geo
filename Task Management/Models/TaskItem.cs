@@ -1,5 +1,9 @@
 ﻿using System;
 using SQLite;
+using Task_Management.Models;
+using Task_Management.ViewModels;
+using Task_Management.Views;
+using Task_Management.Services;
 
 namespace Task_Management.Models
 {

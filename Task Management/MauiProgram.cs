@@ -3,6 +3,8 @@ using Task_Management.Platforms;
 using Task_Management.Services;
 using Task_Management.Models;
 using Task_Management.ViewModels;
+using Task_Management.Views;
+using Microsoft.Maui;
 
 namespace Task_Management;
 
@@ -23,17 +25,19 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<RegistrationViewModel>();
-        builder.Services.AddSingleton<HomePageViewModel>();
-        builder.Services.AddSingleton<HomePage>();
+        builder.Services.AddTransient<HomePageViewModel>();
+        builder.Services.AddTransient<PreviousTasksViewModel>();
         builder.Services.AddSingleton<DateTimePickerViewModel>();
         builder.Services.AddSingleton<AppShellViewModel>();
-        builder.Services.AddSingleton<PreviousTasksViewModel>();
+        
 
 
         // Register Pages
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegistrationPage>();
+        builder.Services.AddTransient<CompletedTasksPage>();
+        builder.Services.AddSingleton<HomePage>();
 
         // Register other services and pages...
         builder.Services.AddSingleton<DatabaseService>();
