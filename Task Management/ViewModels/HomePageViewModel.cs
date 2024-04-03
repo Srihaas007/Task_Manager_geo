@@ -6,31 +6,36 @@ using Microsoft.Maui.Controls;
 using Task_Management.Models;
 using Task_Management.Services;
 
-
-
 namespace Task_Management.ViewModels
 {
     public class HomePageViewModel : BaseViewModel
     {
         private readonly IAppNotificationService _notificationService;
         private readonly DatabaseService _databaseService;
+        private readonly AuthenticationService _authenticationService;
+
         public ObservableCollection<TaskItem> Tasks { get; } = new ObservableCollection<TaskItem>();
 
         public ICommand AddTaskCommand { get; private set; }
         public ICommand LogoutCommand { get; private set; }
         public ICommand ToggleTaskCompletionCommand { get; private set; }
 
-        public HomePageViewModel(IAppNotificationService notificationService, DatabaseService databaseService)
+        public HomePageViewModel(IAppNotificationService notificationService, DatabaseService databaseService, AuthenticationService authenticationService)
         {
             _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
             _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
+            _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
 
             AddTaskCommand = new Command(async () => await ExecuteAddTaskCommand());
             LogoutCommand = new Command(async () => await Logout());
             ToggleTaskCompletionCommand = new Command<TaskItem>(async (task) => await ToggleTaskCompletion(task));
 
-            LoadTasks();
+            if (_authenticationService.IsLoggedIn())
+            {
+                LoadTasks();
+            }
         }
+
         private async void LoadTasks()
         {
             var userIdString = await SecureStorage.GetAsync("userId");
@@ -44,6 +49,7 @@ namespace Task_Management.ViewModels
                 }
             }
         }
+
         private async Task ExecuteAddTaskCommand()
         {
             string taskName = await Application.Current.MainPage.DisplayPromptAsync("New Task", "Enter task name:");
@@ -106,8 +112,10 @@ namespace Task_Management.ViewModels
 
         private async Task Logout()
         {
-            await SecureStorage.SetAsync("userId", string.Empty); // Clear user session
+            await SecureStorage.SetAsync("userId", string.Empty);  // Clear user session
+            _authenticationService.LogOut();  // Properly logout using AuthenticationService
             await Shell.Current.GoToAsync("//LoginPage");
         }
+
     }
 }

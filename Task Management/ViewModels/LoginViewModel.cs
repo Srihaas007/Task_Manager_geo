@@ -11,7 +11,7 @@ namespace Task_Management.ViewModels
         private string username;
         private string password;
         private readonly DatabaseService _databaseService;
-        private readonly AuthenticationService _authenticationService; // Add this
+        private readonly AuthenticationService _authenticationService;
 
         public string Username
         {
@@ -28,10 +28,10 @@ namespace Task_Management.ViewModels
         public ICommand LoginCommand { get; }
         public ICommand NavigateToRegisterCommand { get; }
 
-        public LoginViewModel(DatabaseService databaseService, AuthenticationService authenticationService) // Modify this
+        public LoginViewModel(DatabaseService databaseService, AuthenticationService authenticationService)
         {
-            _databaseService = databaseService;
-            _authenticationService = authenticationService; // Initialize
+            _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
+            _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
             LoginCommand = new Command(async () => await OnLoginClicked());
             NavigateToRegisterCommand = new Command(async () => await Shell.Current.GoToAsync("//RegistrationPage"));
         }
@@ -51,15 +51,13 @@ namespace Task_Management.ViewModels
                 return;
             }
 
-            await SecureStorage.SetAsync("userId", user.Id.ToString());
-            _authenticationService.LogIn(); // Update login status
+            // Correctly passing the userId to the LogIn method.
+            _authenticationService.LogIn(user.Id);
 
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await Shell.Current.GoToAsync("//HomePage");
             });
         }
-
-
     }
 }

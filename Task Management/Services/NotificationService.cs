@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using Task_Management.Services;
+
 #if ANDROID
 using Android.App;
 using Android.Content;
 using AndroidX.Core.App;
+using Resource = Microsoft.Maui.Controls.Resource;
 #endif
 
 namespace Task_Management.Platforms

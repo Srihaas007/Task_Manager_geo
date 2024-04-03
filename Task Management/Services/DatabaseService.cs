@@ -40,10 +40,12 @@ namespace Task_Management.Services
         }
 
         // Retrieve tasks for a specific user
-        public Task<List<TaskItem>> GetTasksAsync(int userId)
+        public async Task<List<TaskItem>> GetTasksAsync(int userId)
         {
-            return _database.Table<TaskItem>().Where(t => t.UserId == userId).ToListAsync();
+            return (await _database.Table<TaskItem>().ToListAsync()).Where(t => t.UserId == userId).ToList();
         }
+
+
 
         // Update an existing task
         public Task<int> UpdateTaskAsync(TaskItem task)

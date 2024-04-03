@@ -1,39 +1,46 @@
-﻿namespace Task_Management;
+﻿using Microsoft.Maui.Controls;
+using Task_Management.Services;
+
+namespace Task_Management;
 
 public partial class AppShell : Shell
 {
-    public AppShell()
+    private readonly AuthenticationService _authenticationService;
+
+    public AppShell(AuthenticationService authenticationService)
     {
         InitializeComponent();
-        Routing.RegisterRoute(nameof(ListDetailDetailPage), typeof(ListDetailDetailPage));
-
-        // Call this method to update the UI immediately on app startup
-        UpdateFlyoutItemsVisibility();
+        _authenticationService = authenticationService;
 
         // Subscribe to a message that notifies when the login state changes
-        MessagingCenter.Subscribe<LoginViewModel>(this, "LoginStateChanged", (sender) =>
-        {
-            UpdateFlyoutItemsVisibility();
-        });
+        MessagingCenter.Subscribe<AuthenticationService>(this, "LoginStatusChanged", sender => UpdateFlyoutItemsVisibility());
+
+        // Initial visibility update
+        UpdateFlyoutItemsVisibility();
     }
 
     private void UpdateFlyoutItemsVisibility()
     {
-        // Retrieve the user ID from secure storage to determine if the user is logged in
-        var userId = SecureStorage.GetAsync("userId").Result;
-        var isLoggedIn = !string.IsNullOrEmpty(userId);
+        bool isLoggedIn = _authenticationService.IsLoggedIn();
 
-        // Loop through FlyoutItems and set IsVisible based on login status
-        foreach (var item in this.Items)
+        // Manually set the visibility for the LoginPage and RegistrationPage
+        var loginItem = (ShellContent)this.FindByName("LoginItem");
+        if (loginItem != null)
         {
-            if (item is FlyoutItem flyoutItem)
-            {
-                // Set visibility based on whether we have a valid user ID
-                flyoutItem.IsVisible = isLoggedIn;
-            }
+            loginItem.IsVisible = !isLoggedIn;
+        }
+
+        var registerItem = (ShellContent)this.FindByName("RegisterItem");
+        if (registerItem != null)
+        {
+            registerItem.IsVisible = !isLoggedIn;
+        }
+
+        // Set the visibility for the MainPage, which should only be shown when logged in
+        var mainPageItem = (FlyoutItem)this.FindByName("MainPageItem");
+        if (mainPageItem != null)
+        {
+            mainPageItem.IsVisible = isLoggedIn;
         }
     }
-
 }
-
-

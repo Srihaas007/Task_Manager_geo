@@ -1,5 +1,5 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Extensions.DependencyInjection;
+﻿
+using Microsoft.Maui.Controls;
 using Task_Management.Services;
 
 namespace Task_Management;
@@ -11,22 +11,17 @@ public partial class App : Application
     public App(IServiceProvider serviceProvider)
     {
         InitializeComponent();
-
         _authenticationService = serviceProvider.GetRequiredService<AuthenticationService>();
-        MainPage = serviceProvider.GetRequiredService<AppShell>();
-    }
+        MainPage = new AppShell(_authenticationService);
 
-    protected override async void OnStart()
-    {
-        base.OnStart();
-
+        // Navigate to the appropriate page based on login status
         if (_authenticationService.IsLoggedIn())
         {
-            await Shell.Current.GoToAsync("//HomePage");
+            Shell.Current.GoToAsync("//MainPage");
         }
         else
         {
-            await Shell.Current.GoToAsync("//LoginPage");
+            Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }
