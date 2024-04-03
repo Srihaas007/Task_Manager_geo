@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Task_Management.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Task_Management.Views"
+    xmlns:local="clr-namespace:Task_Management"
+    xmlns:vm="clr-namespace:Task_Management.ViewModels">
+
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Color x:Key="NavigationBarBackgroundColor">#007BFF</Color>
+            <Color x:Key="NavigationBarTextColor">White</Color>
+            <Style TargetType="Shell">
+                <Setter Property="BackgroundColor" Value="{StaticResource NavigationBarBackgroundColor}" />
+                <Setter Property="ForegroundColor" Value="{StaticResource NavigationBarTextColor}" />
+                <Setter Property="TitleColor" Value="{StaticResource NavigationBarTextColor}" />
+                <Setter Property="DisabledColor" Value="#B4B4B4" />
+                <Setter Property="UnselectedColor" Value="#95D5B2" />
+                <Setter Property="TabBarBackgroundColor" Value="{StaticResource NavigationBarBackgroundColor}" />
+                <Setter Property="TabBarForegroundColor" Value="{StaticResource NavigationBarTextColor}" />
+                <Setter Property="TabBarUnselectedColor" Value="#95D5B2" />
+                <Setter Property="TabBarTitleColor" Value="{StaticResource NavigationBarTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!-- Flyout items only visible after login -->
+    <FlyoutItem Title="Main" IsVisible="{Binding IsUserLoggedIn}">
+        <ShellContent
+            Shell.NavBarIsVisible="true"
+            Route="MainPage"
+            ContentTemplate="{DataTemplate views:MainPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="ListDetail" IsVisible="{Binding IsUserLoggedIn}">
+        <ShellContent
+            Shell.NavBarIsVisible="true"
+            Route="ListDetailPage"
+            ContentTemplate="{DataTemplate views:ListDetailPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Home" IsVisible="{Binding IsUserLoggedIn}">
+        <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
+    </FlyoutItem>
+
+
+    <!-- Login and Register pages should not be inside a FlyoutItem if they need to be accessed without login -->
+    <ShellContent
+        Title="Login"
+        Route="LoginPage"
+        ContentTemplate="{DataTemplate views:LoginPage}" />
+    <ShellContent
+        Title="Register"
+        Route="RegistrationPage"
+        ContentTemplate="{DataTemplate views:RegistrationPage}" />
+    
+    <!-- CustomDateTimePickerPage should not appear in the flyout menu and is likely used in a modal or navigation context -->
+    <ShellContent
+        Title="CustomDateTimePickerPage"
+        Route="CustomDateTimePickerPage"
+        ContentTemplate="{DataTemplate views:CustomDateTimePickerPage}"
+        IsVisible="False" />
+
+</Shell>

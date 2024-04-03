@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="456"
+    height="456"
+    viewBox="0 0 456 456"
+    version="1.1"
+    xml:space="preserve"
+    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <!-- Clock background -->
+    <circle cx="228" cy="228" r="200" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+	
+<!-- Clock hands -->
+    <!-- Hour hand -->
+    <line x1="228" y1="228" x2="228" y2="128" stroke="#000000" stroke-width="10" transform="rotate(30, 228, 228)"/>
+    <!-- Minute hand -->
+    <line x1="228" y1="228" x2="228" y2="78" stroke="#000000" stroke-width="5" transform="rotate(60, 228, 228)"/>
+
+
+    <!-- App name: Task Management -->
+    <text x="45%" y="70%" fill="#000000" font-family="Arial, sans-serif" font-size="40" text-anchor="middle">
+        Task Management
+    </text>
+</svg>
+
