@@ -23,6 +23,11 @@ namespace Task_Management.Services
         {
             return _database.InsertAsync(user);
         }
+        public Task<int> UpdateUserAsync(User user)
+        {
+            return _database.UpdateAsync(user);
+        }
+
 
         public Task<User> GetUserAsync(string username)
         {

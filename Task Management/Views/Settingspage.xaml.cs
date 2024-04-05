@@ -1,9 +1,16 @@
-namespace Task_Management.Views;
+using Microsoft.Maui.Controls;
+using Task_Management.ViewModels;
 
-public partial class Settingspage : ContentPage
+namespace Task_Management.Views
 {
-	public Settingspage()
+
+	public partial class SettingsPage : ContentPage
 	{
-		InitializeComponent();
-	}
+        public SettingsPage(AuthenticationService authenticationService)
+        {
+            InitializeComponent();
+            BindingContext = new SettingsViewModel(authenticationService);
+        }
+
+    }
 }

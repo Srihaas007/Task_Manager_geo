@@ -7,8 +7,10 @@
 
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Home" Clicked="OnHomeClicked" />
-        <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}" />
+        <ToolbarItem Text="Settings"
+                 Order="Primary"
+                 Priority="0"
+                 Command="{Binding NavigateToSettingsCommand}" />
     </ContentPage.ToolbarItems>
 
 

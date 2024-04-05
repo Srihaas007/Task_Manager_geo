@@ -1,9 +1,18 @@
-namespace Task_Management.Views;
+using Microsoft.Maui.Controls;
+using Task_Management.ViewModels;
 
-public partial class ChangePasswordPage : ContentPage
+namespace Task_Management.Views
 {
-	public ChangePasswordPage()
+
+	public partial class ChangePasswordPage : ContentPage
 	{
-		InitializeComponent();
-	}
+        public ChangePasswordPage(DatabaseService databaseService, AuthenticationService authenticationService)
+        {
+            InitializeComponent();
+            BindingContext = new ChangePasswordViewModel(databaseService, authenticationService);
+        }
+
+
+
+    }
 }

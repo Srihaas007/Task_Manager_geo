@@ -36,6 +36,10 @@
 
     <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}"  />
 
+    <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate views:SettingsPage}"  />
+
+    <ShellContent Route="ChangePasswordPage" ContentTemplate="{DataTemplate views:ChangePasswordPage}"  />
+
     <!-- CustomDateTimePickerPage should not appear in the flyout menu -->
     <ShellContent
         Title="CustomDateTimePickerPage"

@@ -17,8 +17,10 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Previous Tasks" Priority="0" Order="Primary" Command="{Binding NavigateToPreviousTasksCommand}" />
-        <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}" />
+        <ToolbarItem Text="Settings"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding NavigateToSettingsCommand}" />
     </ContentPage.ToolbarItems>
 
     <Grid Padding="0">

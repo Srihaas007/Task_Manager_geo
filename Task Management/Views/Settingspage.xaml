@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Task_Management.Views.Settingspage"
-             Title="Settingspage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="Task_Management.Views.SettingsPage"
+             xmlns:local="clr-namespace:Task_Management.Views"
+             xmlns:viewModels="clr-namespace:Task_Management.ViewModels" 
+             Title="SettingsPage"
+             BackgroundColor="#f5f5f5">
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Home"
+         Order="Primary"
+         Priority="0"
+         Command="{Binding NavigateToHomeCommand}" />
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout Spacing="20" Padding="30">
+        <Button Text="Change Password" Command="{Binding ChangePasswordCommand}" />
+        <Button Text="View Completed Tasks" Command="{Binding NavigateToPreviousTasksCommand}" />
+        <Button Text="Logout" Command="{Binding LogoutCommand}" />
+    </StackLayout>
+    
 </ContentPage>

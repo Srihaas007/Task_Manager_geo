@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Task_Management.Models;
 using Task_Management.Services;
+using System.Windows.Input; 
+using Microsoft.Maui.Controls; 
 
 namespace Task_Management.ViewModels
 {
@@ -11,19 +13,22 @@ namespace Task_Management.ViewModels
         private readonly DatabaseService _databaseService;
 
         public ObservableCollection<TaskItem> CompletedTasks { get; } = new ObservableCollection<TaskItem>();
+        public ICommand NavigateToSettingsCommand { get; private set; }
 
         public PreviousTasksViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
+
+            NavigateToSettingsCommand = new Command(async () => await Shell.Current.GoToAsync("///SettingsPage"));
         }
 
-        // Renamed to InitLoadCompletedTasks to indicate it's an initialization method.
+
+       
         public async Task InitLoadCompletedTasks()
         {
             var userIdString = await SecureStorage.GetAsync("userId");
             if (!int.TryParse(userIdString, out int userId))
             {
-                // Handle the error or notify the user that the user ID could not be retrieved.
                 return;
             }
 

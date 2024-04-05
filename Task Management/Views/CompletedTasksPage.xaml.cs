@@ -3,7 +3,7 @@ using Task_Management.ViewModels;
 
 namespace Task_Management.Views
 {
-    // Inside CompletedTasksPage.xaml.cs
+   
     public partial class CompletedTasksPage : ContentPage
     {
         private PreviousTasksViewModel _viewModel;
@@ -15,7 +15,7 @@ namespace Task_Management.Views
             BindingContext = _viewModel;
         }
 
-        // In CompletedTasksPage.xaml.cs
+       
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -36,11 +36,7 @@ namespace Task_Management.Views
             MessagingCenter.Unsubscribe<HomePageViewModel, TaskItem>(this, "TaskUpdated");
         }
 
-        private async void OnHomeClicked(object sender, EventArgs e)
-        {
-            // Assuming you are using Shell navigation, adjust if using a different navigation method
-            await Shell.Current.GoToAsync("//HomePage");
-        }
+       
 
 
     }

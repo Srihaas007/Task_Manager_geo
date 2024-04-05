@@ -17,12 +17,11 @@ namespace Task_Management.ViewModels
         public ObservableCollection<TaskItem> Tasks { get; } = new ObservableCollection<TaskItem>();
 
         public ICommand AddTaskCommand { get; }
-        public ICommand LogoutCommand { get; }
         public ICommand EditTaskCommand { get; }
         public ICommand DeleteTaskCommand { get; }
         public ICommand MarkTaskAsDoneCommand { get; }
-        public ICommand NavigateToPreviousTasksCommand { get; }
-  
+        public ICommand NavigateToSettingsCommand { get; }
+
         public HomePageViewModel(
             IAppNotificationService notificationService,
             DatabaseService databaseService,
@@ -33,8 +32,7 @@ namespace Task_Management.ViewModels
             _authenticationService = authenticationService;
             
             AddTaskCommand = new Command(async () => await ExecuteAddTaskCommand());
-            LogoutCommand = new Command(async () => await Logout());
-            NavigateToPreviousTasksCommand = new Command(async () => await NavigateToPreviousTasks());
+            NavigateToSettingsCommand = new Command(async () => await NavigateToSettings());
             EditTaskCommand = new Command<TaskItem>(async (task) => await EditTask(task));
             DeleteTaskCommand = new Command<TaskItem>(async (task) => await DeleteTask(task));
             MarkTaskAsDoneCommand = new Command<TaskItem>(async (task) => await MarkTaskAsDone(task));
@@ -118,12 +116,12 @@ namespace Task_Management.ViewModels
             MessagingCenter.Send(this, "TaskUpdated", task);
         }
 
-
-        public async Task NavigateToPreviousTasks()
+        private async Task NavigateToSettings()
         {
-            await Shell.Current.GoToAsync("//CompletedTasksPage");
-
+            await Shell.Current.GoToAsync("///SettingsPage");
         }
+
+        
 
         private void LoadTasks()
         {
@@ -193,11 +191,6 @@ namespace Task_Management.ViewModels
             await _notificationService.ScheduleNotification(task.Id, $"Reminder for {task.Name}", "Task is due now.", task.Deadline);
         }
 
-        private async Task Logout()
-        {
-            await SecureStorage.SetAsync("userId", string.Empty); // Clears user session
-            _authenticationService.LogOut(); // Logout using AuthenticationService
-            await Shell.Current.GoToAsync("//LoginPage");
-        }
+        
     }
 }
