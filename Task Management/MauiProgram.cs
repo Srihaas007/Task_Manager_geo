@@ -29,8 +29,11 @@ public static class MauiProgram
         builder.Services.AddTransient<PreviousTasksViewModel>();
         builder.Services.AddSingleton<DateTimePickerViewModel>();
         builder.Services.AddSingleton<AppShellViewModel>();
-        
-        
+        builder.Services.AddSingleton<Settingspage>();
+        builder.Services.AddSingleton<ChangePasswordPage>();
+
+
+
 
 
         // Register Pages
@@ -53,12 +56,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IAppNotificationService, NotificationService>();
         builder.Services.AddSingleton<AuthenticationService>();
         builder.Services.AddTransient<AppShell>();
-
-
-
-
-
-
 
 
         return builder.Build();

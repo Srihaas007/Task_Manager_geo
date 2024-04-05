@@ -42,7 +42,7 @@
         Route="CustomDateTimePickerPage"
         ContentTemplate="{DataTemplate views:CustomDateTimePickerPage}"
         IsVisible="False" />
-    
-    
+
+
 
 </Shell>
