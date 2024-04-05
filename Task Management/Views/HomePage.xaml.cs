@@ -1,6 +1,7 @@
 using Microsoft.Maui.Controls;
 using Task_Management.Models;
 using Task_Management.ViewModels;
+using System;
 
 namespace Task_Management.Views
 {
@@ -12,21 +13,38 @@ namespace Task_Management.Views
             BindingContext = viewModel;
         }
 
-        private async void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private async void OnTaskOptionsButtonClicked(object sender, EventArgs e)
         {
-            var checkBox = sender as CheckBox;
-            var taskItem = checkBox?.BindingContext as TaskItem;
-            var viewModel = BindingContext as HomePageViewModel;
+            var button = sender as Button;
+            var taskItem = button?.BindingContext as TaskItem;
 
-            if (e.Value && taskItem != null && !taskItem.IsCompleted)
+            if (taskItem != null)
             {
-                // Execute the ToggleTaskCompletionCommand
-                await viewModel?.ToggleTaskCompletion(taskItem);
-                checkBox.IsChecked = taskItem.IsCompleted;
-            }
-            else if (!e.Value)
-            {
-                // Handle uncheck logic if needed
+                string action = await DisplayActionSheet(
+                    "Task Options",
+                    "Cancel",
+                    null,
+                    "Edit", "Delete", "Done"
+                );
+
+                var viewModel = BindingContext as HomePageViewModel;
+
+                if (viewModel != null)
+                {
+                    // Directly invoke the method instead of using ExecuteAsync
+                    switch (action)
+                    {
+                        case "Edit":
+                            await viewModel.EditTask(taskItem);
+                            break;
+                        case "Delete":
+                            await viewModel.DeleteTask(taskItem);
+                            break;
+                        case "Done":
+                            await viewModel.MarkTaskAsDone(taskItem);
+                            break;
+                    }
+                }
             }
         }
     }

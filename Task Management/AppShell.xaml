@@ -24,16 +24,17 @@
     </Shell.Resources>
 
     <!-- Main page -->
-    <ShellContent Route="MainPage" ContentTemplate="{DataTemplate views:MainPage}" />
+    <ShellContent Title="Main" Route="MainPage" ContentTemplate="{DataTemplate views:MainPage}" />
 
     <!-- Login page -->
     <ShellContent Title="Login" Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
 
     <!-- Registration page -->
-    <ShellContent Title="Register" Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
+    <ShellContent Title="Register" Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage} " IsVisible="False" />
 
-    <ShellContent Title="Completed Tasks" Route="CompletedTasksPage" ContentTemplate="{DataTemplate views:CompletedTasksPage}" />
+    <ShellContent Title="Completed Tasks" Route="CompletedTasksPage" ContentTemplate="{DataTemplate views:CompletedTasksPage}" IsVisible="False" />
 
+    <ShellContent Title="Home" Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
 
     <!-- CustomDateTimePickerPage should not appear in the flyout menu -->
     <ShellContent
@@ -42,7 +43,6 @@
         ContentTemplate="{DataTemplate views:CustomDateTimePickerPage}"
         IsVisible="False" />
     
-    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
-
+    
 
 </Shell>

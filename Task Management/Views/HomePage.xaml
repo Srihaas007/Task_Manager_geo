@@ -7,6 +7,15 @@
              Title="HomePage"
              BackgroundColor="#f5f5f5">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TaskLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#333" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Previous Tasks" Priority="0" Order="Primary" Command="{Binding NavigateToPreviousTasksCommand}" />
         <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}" />
@@ -21,7 +30,7 @@
 
         <!-- Task Header -->
         <StackLayout Grid.Row="0" Padding="20" Spacing="0">
-            <Label Text="Tasks" FontSize="Header" FontAttributes="Bold" HorizontalOptions="Start"/>
+            <Label Text="Tasks" FontSize="24" FontAttributes="Bold" HorizontalOptions="Start" TextColor="#333"/>
         </StackLayout>
 
         <!-- Task List -->
@@ -34,25 +43,25 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Frame Grid.Column="0" CornerRadius="10" HasShadow="True" BackgroundColor="White">
-                            <StackLayout Orientation="Vertical">
-                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"/>
-                                <Label Text="{Binding Detail}" FontSize="Small"/>
-                                <Label Text="{Binding DueTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" FontSize="Small" FontAttributes="Italic"/>
+                            <StackLayout Orientation="Vertical" Padding="10">
+                                <Label Text="{Binding Name}" Style="{StaticResource TaskLabelStyle}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Detail}" Style="{StaticResource TaskLabelStyle}" />
+                                <Label Text="{Binding DueTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" Style="{StaticResource TaskLabelStyle}" FontAttributes="Italic"/>
                             </StackLayout>
                         </Frame>
-                        <ImageButton Grid.Column="1"
-                             Source="threedots.png"
-                             VerticalOptions="Center"
-                             HorizontalOptions="End"
-                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomePageViewModel}}, Path=ShowTaskOptionsCommand}"
-                             CommandParameter="{Binding .}" />
-
-
+                        <Button Grid.Column="1"
+                                Text="≡"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                Clicked="OnTaskOptionsButtonClicked"
+                                CommandParameter="{Binding .}" 
+                                BackgroundColor="#2196F3"
+                                TextColor="White"
+                                CornerRadius="20"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
 
         <!-- Add Task Button -->
         <Button Grid.Row="2"
@@ -66,7 +75,6 @@
                 HorizontalOptions="End"
                 VerticalOptions="End"
                 Margin="0,0,20,20"
-                Command="{Binding AddTaskCommand}"
-                Style="{StaticResource AddTaskButtonStyle}" />
+                Command="{Binding AddTaskCommand}" />
     </Grid>
 </ContentPage>

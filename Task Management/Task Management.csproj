@@ -58,6 +58,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\Applogoo.svg" />
 	  <None Remove="Resources\Images\logo.png" />
+	  <None Remove="Resources\Images\threedots.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -86,6 +87,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RegistrationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TaskOptionsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

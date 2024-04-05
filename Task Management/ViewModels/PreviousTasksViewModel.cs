@@ -9,15 +9,16 @@ namespace Task_Management.ViewModels
     public class PreviousTasksViewModel : BaseViewModel
     {
         private readonly DatabaseService _databaseService;
+
         public ObservableCollection<TaskItem> CompletedTasks { get; } = new ObservableCollection<TaskItem>();
 
         public PreviousTasksViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
-            LoadCompletedTasks();
         }
 
-        public async Task LoadCompletedTasks()
+        // Renamed to InitLoadCompletedTasks to indicate it's an initialization method.
+        public async Task InitLoadCompletedTasks()
         {
             var userIdString = await SecureStorage.GetAsync("userId");
             if (!int.TryParse(userIdString, out int userId))

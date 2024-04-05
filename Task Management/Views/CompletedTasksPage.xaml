@@ -4,7 +4,14 @@
              x:Class="Task_Management.Views.CompletedTasksPage"
              xmlns:vm="clr-namespace:Task_Management.ViewModels"
              Title="CompletedTasksPage">
-    
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Home" Clicked="OnHomeClicked" />
+        <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+
+
     <CollectionView ItemsSource="{Binding CompletedTasks}">
         <CollectionView.ItemTemplate>
             <DataTemplate>
@@ -21,12 +28,12 @@
                         </StackLayout>
                     </Frame>
                     <Image Grid.Column="1"
-               Source="checkmark_circle.png" 
-               VerticalOptions="Center"
-               HorizontalOptions="End"
-               IsVisible="{Binding IsCompleted}"
-               WidthRequest="30"
-               HeightRequest="30"/>
+                       Source="checkmark_circle.png" 
+                       VerticalOptions="Center"
+                       HorizontalOptions="End"
+                       IsVisible="{Binding IsCompleted}"
+                       WidthRequest="30"
+                       HeightRequest="30"/>
                 </Grid>
             </DataTemplate>
 

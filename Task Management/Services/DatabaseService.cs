@@ -52,5 +52,12 @@ namespace Task_Management.Services
         {
             return _database.UpdateAsync(task);
         }
+        // In DatabaseService.cs
+
+        public Task<int> DeleteTaskAsync(TaskItem task)
+        {
+            return _database.DeleteAsync(task);
+        }
+
     }
 }

@@ -30,6 +30,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<DateTimePickerViewModel>();
         builder.Services.AddSingleton<AppShellViewModel>();
         
+        
 
 
         // Register Pages
@@ -38,7 +39,8 @@ public static class MauiProgram
         builder.Services.AddTransient<RegistrationPage>();
         builder.Services.AddTransient<CompletedTasksPage>();
         builder.Services.AddSingleton<HomePage>();
-       
+        builder.Services.AddSingleton<TaskOptionsPopup>();
+
 
         // Register other services and pages...
         builder.Services.AddSingleton<DatabaseService>();
