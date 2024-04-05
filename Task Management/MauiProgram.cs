@@ -48,6 +48,7 @@ public static class MauiProgram
 
         // Register other services and pages...
         builder.Services.AddSingleton<DatabaseService>();
+        builder.Services.AddSingleton<GeolocationService>();
         builder.Services.AddTransient<SampleDataService>();
         builder.Services.AddTransient<ListDetailDetailViewModel>();
         builder.Services.AddTransient<ListDetailDetailPage>();

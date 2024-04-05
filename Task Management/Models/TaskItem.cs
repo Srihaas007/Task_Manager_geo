@@ -24,6 +24,9 @@ namespace Task_Management.Models
         public DateTime Reminder3 => DueTime.AddMinutes(-15);
         public DateTime Deadline => DueTime; // Assuming DueTime is the deadline
 
+        // Property to store the task location
+        public TaskLocation Location { get; set; }
+
         // Public parameterless constructor
         public TaskItem()
         {
@@ -37,6 +40,11 @@ namespace Task_Management.Models
             Detail = detail;
             DueTime = dueTime;
         }
+    }
+    public enum TaskLocation
+    {
+        Home,
+        Outside
     }
 
 

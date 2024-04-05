@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices.Sensors;
 using Task_Management.Models;
 using Task_Management.Services;
 
@@ -13,7 +16,7 @@ namespace Task_Management.ViewModels
         private readonly IAppNotificationService _notificationService;
         private readonly DatabaseService _databaseService;
         private readonly AuthenticationService _authenticationService;
-
+        private readonly GeolocationService _geolocationService;
         public ObservableCollection<TaskItem> Tasks { get; } = new ObservableCollection<TaskItem>();
 
         public ICommand AddTaskCommand { get; }
@@ -25,12 +28,14 @@ namespace Task_Management.ViewModels
         public HomePageViewModel(
             IAppNotificationService notificationService,
             DatabaseService databaseService,
-            AuthenticationService authenticationService)
+            AuthenticationService authenticationService,
+            GeolocationService geolocationService)
         {
             _notificationService = notificationService;
             _databaseService = databaseService;
             _authenticationService = authenticationService;
-            
+            _geolocationService = geolocationService; 
+
             AddTaskCommand = new Command(async () => await ExecuteAddTaskCommand());
             NavigateToSettingsCommand = new Command(async () => await NavigateToSettings());
             EditTaskCommand = new Command<TaskItem>(async (task) => await EditTask(task));
@@ -66,6 +71,46 @@ namespace Task_Management.ViewModels
                     break;
             }
         }
+
+        private async Task SaveHomeLocation(Location location)
+        {
+            // Convert location to a string format
+            string locationString = $"{location.Latitude},{location.Longitude}";
+            await SecureStorage.SetAsync("HomeLocation", locationString);
+        }
+
+
+        private async Task<Location> GetHomeLocationAsync()
+        {
+            var locationString = await SecureStorage.GetAsync("HomeLocation");
+            if (string.IsNullOrEmpty(locationString))
+            {
+                return null;
+            }
+
+            var parts = locationString.Split(',');
+            if (parts.Length != 2)
+            {
+                return null;
+            }
+
+            if (double.TryParse(parts[0], out double latitude) && double.TryParse(parts[1], out double longitude))
+            {
+                return new Location(latitude, longitude);
+            }
+
+            return null;
+        }
+
+        private async Task SetHomeLocation()
+        {
+            var location = await Geolocation.GetLastKnownLocationAsync();
+            if (location != null)
+            {
+                await SaveHomeLocation(location);
+            }
+        }
+
 
         public async Task EditTask(TaskItem task)
         {
@@ -105,14 +150,14 @@ namespace Task_Management.ViewModels
         }
 
 
-        // In the HomePageViewModel or wherever the task is marked as done
+       
         public async Task MarkTaskAsDone(TaskItem task)
         {
             task.IsCompleted = true;
             await _databaseService.UpdateTaskAsync(task);
             Tasks.Remove(task);
 
-            // Send a message indicating a task update
+            
             MessagingCenter.Send(this, "TaskUpdated", task);
         }
 
@@ -140,6 +185,8 @@ namespace Task_Management.ViewModels
             });
         }
 
+
+
         private async Task ExecuteAddTaskCommand()
         {
             string taskName = await Application.Current.MainPage.DisplayPromptAsync("New Task", "Enter task name:");
@@ -150,6 +197,23 @@ namespace Task_Management.ViewModels
             }
 
             string taskDetail = await Application.Current.MainPage.DisplayPromptAsync("Task Detail", "Enter task detail (optional):");
+
+            // Ask for task location
+            string[] options = { "Home", "Outside" };
+            string selectedLocation = await Application.Current.MainPage.DisplayActionSheet("Select Task Location", "Cancel", null, options);
+
+            TaskLocation location;
+            switch (selectedLocation)
+            {
+                case "Home":
+                    location = TaskLocation.Home;
+                    break;
+                case "Outside":
+                    location = TaskLocation.Outside;
+                    break;
+                default:
+                    return; // User canceled task creation
+            }
 
             var dateTimePickerViewModel = new DateTimePickerViewModel();
             var dateTimePickerPage = new CustomDateTimePickerPage(dateTimePickerViewModel);
@@ -174,11 +238,28 @@ namespace Task_Management.ViewModels
                 UserId = userId,
                 Name = taskName,
                 Detail = taskDetail,
-                DueTime = selectedDateTime.Value
+                DueTime = selectedDateTime.Value,
+                Location = location
             };
 
             await _databaseService.AddTaskAsync(newTask);
             Tasks.Add(newTask);
+
+            if (location == TaskLocation.Outside)
+            {
+                var homeLocation = await GetHomeLocationAsync();
+                if (homeLocation == null)
+                {
+                    await SetHomeLocation(); // This sets the home location if not already set
+                }
+
+                // Use the _geolocationService directly
+                if (_geolocationService != null)
+                {
+                    _geolocationService.StartMonitoringForTaskOutsideHome(newTask);
+                }
+            }
+
 
             await ScheduleReminders(newTask);
         }

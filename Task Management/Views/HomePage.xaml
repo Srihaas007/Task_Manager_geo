@@ -48,6 +48,7 @@
                             <StackLayout Orientation="Vertical" Padding="10">
                                 <Label Text="{Binding Name}" Style="{StaticResource TaskLabelStyle}" FontAttributes="Bold"/>
                                 <Label Text="{Binding Detail}" Style="{StaticResource TaskLabelStyle}" />
+                                <Label Text="{Binding Location, StringFormat='Location: {0}'}" Style="{StaticResource TaskLabelStyle}" FontAttributes="Italic"/>
                                 <Label Text="{Binding DueTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" Style="{StaticResource TaskLabelStyle}" FontAttributes="Italic"/>
                             </StackLayout>
                         </Frame>
