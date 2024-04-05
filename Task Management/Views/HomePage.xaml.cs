@@ -1,6 +1,6 @@
+using Microsoft.Maui.Controls;
+using Task_Management.Models;
 using Task_Management.ViewModels;
-using Microsoft.Maui.Controls; 
-using Task_Management.Models; 
 
 namespace Task_Management.Views
 {
@@ -12,14 +12,21 @@ namespace Task_Management.Views
             BindingContext = viewModel;
         }
 
-        private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private async void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            var checkBox = (CheckBox)sender;
-            var taskItem = (TaskItem)checkBox.BindingContext;
-            var vm = (HomePageViewModel)BindingContext;
-            if (vm.ToggleTaskCompletionCommand.CanExecute(taskItem))
+            var checkBox = sender as CheckBox;
+            var taskItem = checkBox?.BindingContext as TaskItem;
+            var viewModel = BindingContext as HomePageViewModel;
+
+            if (e.Value && taskItem != null && !taskItem.IsCompleted)
             {
-                vm.ToggleTaskCompletionCommand.Execute(taskItem);
+                // Execute the ToggleTaskCompletionCommand
+                await viewModel?.ToggleTaskCompletion(taskItem);
+                checkBox.IsChecked = taskItem.IsCompleted;
+            }
+            else if (!e.Value)
+            {
+                // Handle uncheck logic if needed
             }
         }
     }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using Task_Management.Models;
 using Task_Management.Services;
+using Task_Management.Views;
 
 namespace Task_Management.ViewModels
 {
@@ -16,19 +16,24 @@ namespace Task_Management.ViewModels
 
         public ObservableCollection<TaskItem> Tasks { get; } = new ObservableCollection<TaskItem>();
 
-        public ICommand AddTaskCommand { get; private set; }
-        public ICommand LogoutCommand { get; private set; }
-        public ICommand ToggleTaskCompletionCommand { get; private set; }
+        public ICommand AddTaskCommand { get; }
+        public ICommand LogoutCommand { get; }
+        public ICommand ToggleTaskCompletionCommand { get; }
+        public ICommand NavigateToPreviousTasksCommand { get; }
 
-        public HomePageViewModel(IAppNotificationService notificationService, DatabaseService databaseService, AuthenticationService authenticationService)
+        public HomePageViewModel(
+            IAppNotificationService notificationService,
+            DatabaseService databaseService,
+            AuthenticationService authenticationService)
         {
-            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
-            _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
-            _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+            _notificationService = notificationService;
+            _databaseService = databaseService;
+            _authenticationService = authenticationService;
 
             AddTaskCommand = new Command(async () => await ExecuteAddTaskCommand());
             LogoutCommand = new Command(async () => await Logout());
             ToggleTaskCompletionCommand = new Command<TaskItem>(async (task) => await ToggleTaskCompletion(task));
+            NavigateToPreviousTasksCommand = new Command(async () => await NavigateToPreviousTasks());
 
             if (_authenticationService.IsLoggedIn())
             {
@@ -36,18 +41,54 @@ namespace Task_Management.ViewModels
             }
         }
 
-        private async void LoadTasks()
+        public async Task ToggleTaskCompletion(TaskItem task)
         {
-            var userIdString = await SecureStorage.GetAsync("userId");
-            if (int.TryParse(userIdString, out int userId))
+            if (task == null || task.IsProcessing || task.IsCompleted) return;
+
+            task.IsProcessing = true;
+
+            bool confirmCompletion = await Application.Current.MainPage.DisplayAlert(
+                "Confirm Task Completion",
+                "Have you completed this task?",
+                "Yes",
+                "No"
+            );
+
+            if (confirmCompletion)
             {
-                var tasks = await _databaseService.GetTasksAsync(userId);
-                Tasks.Clear();
-                foreach (var task in tasks)
-                {
-                    Tasks.Add(task);
-                }
+                task.IsCompleted = true;
+                await _databaseService.UpdateTaskAsync(task);
+                Tasks.Remove(task);
+                // If there is a need to add the task to previous tasks, it can be done here.
             }
+            else
+            {
+                task.IsCompleted = false;
+            }
+
+            task.IsProcessing = false;
+        }
+
+        private async Task NavigateToPreviousTasks()
+        {
+            await Shell.Current.GoToAsync(nameof(CompletedTasksPage));
+        }
+
+        private void LoadTasks()
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                var userIdString = await SecureStorage.GetAsync("userId");
+                if (int.TryParse(userIdString, out int userId))
+                {
+                    var tasks = await _databaseService.GetTasksAsync(userId);
+                    Tasks.Clear();
+                    foreach (var task in tasks)
+                    {
+                        Tasks.Add(task);
+                    }
+                }
+            });
         }
 
         private async Task ExecuteAddTaskCommand()
@@ -92,26 +133,6 @@ namespace Task_Management.ViewModels
 
             await ScheduleReminders(newTask);
         }
-        private async Task ToggleTaskCompletion(TaskItem task)
-        {
-            if (task != null)
-            {
-                bool confirmCompletion = await Application.Current.MainPage.DisplayAlert(
-                    "Confirm Task Completion",
-                    "Have you completed this task?",
-                    "Yes",
-                    "No"
-                );
-
-                if (confirmCompletion)
-                {
-                    task.IsCompleted = !task.IsCompleted;
-                    await _databaseService.UpdateTaskAsync(task); // Update the task's completion status in the database
-                    LoadTasks(); // Reload tasks to reflect changes
-                }
-            }
-        }
-
 
         private async Task ScheduleReminders(TaskItem task)
         {
@@ -123,10 +144,9 @@ namespace Task_Management.ViewModels
 
         private async Task Logout()
         {
-            await SecureStorage.SetAsync("userId", string.Empty);  // Clear user session
-            _authenticationService.LogOut();  // Properly logout using AuthenticationService
+            await SecureStorage.SetAsync("userId", string.Empty); // Clears user session
+            _authenticationService.LogOut(); // Logout using AuthenticationService
             await Shell.Current.GoToAsync("//LoginPage");
         }
-
     }
 }

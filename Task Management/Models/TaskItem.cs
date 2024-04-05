@@ -15,6 +15,7 @@ namespace Task_Management.Models
         public string Detail { get; set; }
         public DateTime DueTime { get; set; }
         public int UserId { get; set; } // Foreign key for the User
+        public bool IsProcessing { get; set; }
 
         public bool IsCompleted { get; set; } // To mark the task as completed
                                               // Additional properties to store the notification times

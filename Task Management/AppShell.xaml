@@ -32,6 +32,9 @@
     <!-- Registration page -->
     <ShellContent Title="Register" Route="RegistrationPage" ContentTemplate="{DataTemplate views:RegistrationPage}" />
 
+    <ShellContent Title="Completed Tasks" Route="CompletedTasksPage" ContentTemplate="{DataTemplate views:CompletedTasksPage}" />
+
+
     <!-- CustomDateTimePickerPage should not appear in the flyout menu -->
     <ShellContent
         Title="CustomDateTimePickerPage"

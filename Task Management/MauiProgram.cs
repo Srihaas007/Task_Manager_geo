@@ -38,6 +38,7 @@ public static class MauiProgram
         builder.Services.AddTransient<RegistrationPage>();
         builder.Services.AddTransient<CompletedTasksPage>();
         builder.Services.AddSingleton<HomePage>();
+       
 
         // Register other services and pages...
         builder.Services.AddSingleton<DatabaseService>();

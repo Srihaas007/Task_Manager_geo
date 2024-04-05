@@ -37,7 +37,8 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\alogo.svg">
-		  <ForegroundFile>Resources\AppIcon\appiconfg.svg</ForegroundFile>
+		  
+			
 		</MauiIcon>
 
 		<!-- Splash Screen -->
@@ -62,10 +63,12 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.2.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14">
+		  <TreatAsUsed>true</TreatAsUsed>
+		</PackageReference>
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Shiny.Notifications" Version="3.3.2" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.14" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 	</ItemGroup>
 
