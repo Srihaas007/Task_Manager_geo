@@ -5,6 +5,7 @@ using Microsoft.Maui.Controls;
 using Task_Management.Models;
 using Task_Management.Services;
 
+
 namespace Task_Management.ViewModels
 {
     public class HomePageViewModel : BaseViewModel
@@ -120,7 +121,7 @@ namespace Task_Management.ViewModels
 
         public async Task NavigateToPreviousTasks()
         {
-            await Shell.Current.GoToAsync("///CompletedTasksPage");
+            await Shell.Current.GoToAsync("//CompletedTasksPage");
 
         }
 
