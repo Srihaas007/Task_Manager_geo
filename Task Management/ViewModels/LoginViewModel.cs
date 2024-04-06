@@ -55,7 +55,7 @@ namespace Task_Management.ViewModels
 
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await Shell.Current.GoToAsync("//HomePage"); // Navigate to MainPage instead of HomePage
+                await Shell.Current.GoToAsync("//HomePage"); 
             });
         }
     }

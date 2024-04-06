@@ -30,7 +30,7 @@ public partial class LoginPage : ContentPage
             var userId = await SecureStorage.GetAsync("userId");
             if (!string.IsNullOrEmpty(userId))
             {
-                // User is logged in, navigate to the HomePage
+                // when User is logged in, navigate to the HomePage
                 await Shell.Current.GoToAsync("//HomePage");
             }
         }

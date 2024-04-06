@@ -28,7 +28,7 @@ public partial class App : Application
     protected override void OnStart()
     {
         base.OnStart();
-        // Asynchronous call without awaiting since OnStart cannot be async
+        
         MainThread.BeginInvokeOnMainThread(async () => await RequestLocationPermissions());
     }
 
@@ -47,8 +47,8 @@ public partial class App : Application
         }
         else
         {
-            // Handle the case where the user denies location permissions
-            // For example, inform the user that location features will not be available
+            // Continue the app with out the location services
+            
         }
     }
 

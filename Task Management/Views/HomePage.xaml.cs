@@ -31,7 +31,7 @@ namespace Task_Management.Views
 
                 if (viewModel != null)
                 {
-                    // Directly invoke the method instead of using ExecuteAsync
+                    
                     switch (action)
                     {
                         case "Edit":

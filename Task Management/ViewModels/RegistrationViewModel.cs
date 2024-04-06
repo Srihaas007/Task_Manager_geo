@@ -43,7 +43,7 @@ namespace Task_Management.ViewModels
         }
 
         public ICommand RegisterCommand { get; }
-        public ICommand NavigateToLoginCommand { get; } // Define the command
+        public ICommand NavigateToLoginCommand { get; } 
 
         public RegistrationViewModel(DatabaseService databaseService)
         {

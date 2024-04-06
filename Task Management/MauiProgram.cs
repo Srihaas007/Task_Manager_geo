@@ -41,22 +41,18 @@ public static class MauiProgram
         builder.Services.AddTransient<RegistrationPage>();
         builder.Services.AddTransient<CompletedTasksPage>();
         builder.Services.AddSingleton<HomePage>();
-        builder.Services.AddSingleton<TaskOptionsPopup>();
         builder.Services.AddSingleton<SettingsPage>();
         builder.Services.AddSingleton<ChangePasswordPage>();
 
 
-        // Register other services and pages...
+        // Register other services
         builder.Services.AddSingleton<DatabaseService>();
         builder.Services.AddSingleton<GeolocationService>();
-        builder.Services.AddTransient<SampleDataService>();
-        builder.Services.AddTransient<ListDetailDetailViewModel>();
-        builder.Services.AddTransient<ListDetailDetailPage>();
-        builder.Services.AddSingleton<ListDetailViewModel>();
-        builder.Services.AddSingleton<ListDetailPage>();
         builder.Services.AddSingleton<CustomDateTimePickerPage>();
         builder.Services.AddSingleton<IAppNotificationService, NotificationService>();
         builder.Services.AddSingleton<AuthenticationService>();
+
+
         builder.Services.AddTransient<AppShell>();
 
 

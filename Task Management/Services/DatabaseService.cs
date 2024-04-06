@@ -16,7 +16,7 @@ namespace Task_Management.Services
             var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TaskManagementDb.db3");
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<User>().Wait();
-            _database.CreateTableAsync<TaskItem>().Wait(); // Ensure TaskItem table is created
+            _database.CreateTableAsync<TaskItem>().Wait(); 
         }
 
         public Task<int> AddUserAsync(User user)
@@ -57,7 +57,8 @@ namespace Task_Management.Services
         {
             return _database.UpdateAsync(task);
         }
-        // In DatabaseService.cs
+
+        // Deleting the Task
 
         public Task<int> DeleteTaskAsync(TaskItem task)
         {

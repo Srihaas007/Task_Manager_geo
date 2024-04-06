@@ -9,14 +9,14 @@ namespace Task_Management.Services
         public void LogIn(int userId)
         {
             Preferences.Set("IsLoggedIn", true);
-            SecureStorage.SetAsync("userId", userId.ToString()).Wait(); // Store user ID securely
+            SecureStorage.SetAsync("userId", userId.ToString()).Wait(); 
             MessagingCenter.Send(this, "LoginStatusChanged");
         }
 
         public void LogOut()
         {
             Preferences.Set("IsLoggedIn", false);
-            SecureStorage.SetAsync("userId", string.Empty).Wait(); // Clear user ID
+            SecureStorage.SetAsync("userId", string.Empty).Wait(); 
             MessagingCenter.Send(this, "LoginStatusChanged");
         }
 

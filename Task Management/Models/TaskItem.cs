@@ -18,11 +18,12 @@ namespace Task_Management.Models
         public bool IsProcessing { get; set; }
 
         public bool IsCompleted { get; set; } // To mark the task as completed
-                                              // Additional properties to store the notification times
+
+        // Additional properties to store the notification times
         public DateTime Reminder1 => DueTime.AddHours(-1);
         public DateTime Reminder2 => DueTime.AddMinutes(-30);
         public DateTime Reminder3 => DueTime.AddMinutes(-15);
-        public DateTime Deadline => DueTime; // Assuming DueTime is the deadline
+        public DateTime Deadline => DueTime; 
 
         // Property to store the task location
         public TaskLocation Location { get; set; }

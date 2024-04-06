@@ -14,7 +14,7 @@ namespace Task_Management.ViewModels
         {
             _authenticationService = authenticationService;
 
-            // Subscribe to the event that notifies about login status changes
+            // Subscribing to the event that notifies about login status changes
             MessagingCenter.Subscribe<AuthenticationService>(this, "LoginStatusChanged", (sender) =>
             {
                 OnPropertyChanged(nameof(IsUserLoggedIn));

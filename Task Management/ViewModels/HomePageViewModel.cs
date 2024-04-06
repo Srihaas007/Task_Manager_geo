@@ -74,7 +74,7 @@ namespace Task_Management.ViewModels
 
         private async Task SaveHomeLocation(Location location)
         {
-            // Convert location to a string format
+            // Converting location to a string format
             string locationString = $"{location.Latitude},{location.Longitude}";
             await SecureStorage.SetAsync("HomeLocation", locationString);
         }

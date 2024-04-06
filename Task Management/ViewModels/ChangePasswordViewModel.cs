@@ -32,7 +32,7 @@ namespace Task_Management.ViewModels
 
         private async Task ChangePassword()
         {
-            var username = GetCurrentUsername(); // This should be implemented to get the current user's username
+            var username = GetCurrentUsername(); 
 
             if (string.IsNullOrEmpty(username))
             {
@@ -47,25 +47,25 @@ namespace Task_Management.ViewModels
                 return;
             }
 
-            // Validate the current password
+            // Validating the current password
             if (user.Password != CurrentPassword)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Current password is incorrect.", "OK");
                 return;
             }
 
-            // Check if new password and confirm password match
+            // Checking if new password and confirm password match
             if (NewPassword != ConfirmPassword)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "New passwords do not match.", "OK");
                 return;
             }
 
-            // Update the password in the database
+            // Updating the password in the database
             user.Password = NewPassword;
             await _databaseService.UpdateUserAsync(user);
 
-            // Optionally, log the user out or inform them to log in again
+            
             _authenticationService.LogOut();
             await Shell.Current.GoToAsync("//LoginPage");
 

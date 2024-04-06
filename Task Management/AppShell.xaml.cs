@@ -12,7 +12,7 @@ public partial class AppShell : Shell
         InitializeComponent();
         _authenticationService = authenticationService;
 
-        // Navigate to the appropriate page based on login status
+        // Navigating to the appropriate page based on login status
         if (_authenticationService.IsLoggedIn())
         {
             GoToAsync("//MainPage");

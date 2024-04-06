@@ -97,7 +97,7 @@ namespace Task_Management.Services
 
                 _lastKnownLocation = currentLocation;
 
-                // Wait for some time before checking the location again
+                // after the time it checks the location again automatically
                 await Task.Delay(TimeSpan.FromMinutes(1));
             }
         }
