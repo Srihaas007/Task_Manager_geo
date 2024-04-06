@@ -1,11 +1,11 @@
 # Task Management app
 
 
-## Inspiration and History
+## Motivation
 - After thoroughly checking over the rubric requirements and seeing how important it is to communicate the applications goal clearly, it became evident that meeting the 'Outstanding' category would require a comprehensive explanation of the app's user-centric design and motivations behind development. 
 - This would involve digging further into the particular issues the app aims to solve, the special remedies it offers, and the ways in which it is designed to make the user experience more efficient.
 
-## Elegant Architecture
+## Architecture
 - This application is a model of cross-platform capability which was created using the cutting-edge .NET MAUI App Accelerator. 
 - With a single cohesive codebase, it creates the whole digital ecosystem, impacting consumers life on all the systems including Windows, iOS, Android, and macOS.
 - This digital concept design is mainly based on a pattern which is Model-View-ViewModel (MVVM).
