@@ -1,6 +1,3 @@
-using Microsoft.Maui.Controls;
-using Task_Management.ViewModels;
-
 namespace Task_Management.Views
 {
 

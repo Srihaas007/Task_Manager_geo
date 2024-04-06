@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
-using Task_Management.Services;
+﻿using System.Windows.Input;
 
 namespace Task_Management.ViewModels
 {

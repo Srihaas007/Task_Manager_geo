@@ -1,12 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Devices.Sensors;
-using Task_Management.Models;
-using Task_Management.Services;
+﻿using System.Windows.Input;
 
 
 namespace Task_Management.ViewModels

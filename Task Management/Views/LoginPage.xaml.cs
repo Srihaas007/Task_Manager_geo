@@ -1,9 +1,6 @@
-using Task_Management.ViewModels;
-using Microsoft.Maui.Controls;
-
 namespace Task_Management.Views
 {
-public partial class LoginPage : ContentPage
+    public partial class LoginPage : ContentPage
 {
     public LoginPage(LoginViewModel viewModel)
     {

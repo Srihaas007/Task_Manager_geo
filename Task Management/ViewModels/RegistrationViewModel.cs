@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Text.RegularExpressions;
-using Task_Management.Services;
-using Microsoft.Maui.Controls;  // For using MessagingCenter
 
 namespace Task_Management.ViewModels
 {

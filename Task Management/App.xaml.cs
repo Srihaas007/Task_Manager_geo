@@ -1,10 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
-using Task_Management.Services;
-using Task_Management.Views;
-
-namespace Task_Management;
+﻿namespace Task_Management;
 
 public partial class App : Application
 {

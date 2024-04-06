@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-using Task_Management.Services;
-
-#if ANDROID
+﻿#if ANDROID
 using Android.App;
 using Android.Content;
 using AndroidX.Core.App;

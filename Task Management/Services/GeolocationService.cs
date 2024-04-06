@@ -1,10 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Devices.Sensors;
-using Task_Management.Models;
-using Task_Management.Services;
-
-namespace Task_Management.Services
+﻿namespace Task_Management.Services
 {
     public class GeolocationService
     {

@@ -1,8 +1,4 @@
-﻿using System.ComponentModel;
-using Microsoft.Maui.Controls;
-using Task_Management.Services;
-
-namespace Task_Management.ViewModels
+﻿namespace Task_Management.ViewModels
 {
     public class AppShellViewModel : INotifyPropertyChanged
     {

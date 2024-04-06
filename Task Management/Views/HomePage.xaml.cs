@@ -1,8 +1,3 @@
-using Microsoft.Maui.Controls;
-using Task_Management.Models;
-using Task_Management.ViewModels;
-using System;
-
 namespace Task_Management.Views
 {
     public partial class HomePage : ContentPage

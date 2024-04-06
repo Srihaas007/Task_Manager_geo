@@ -1,8 +1,4 @@
-﻿using Task_Management.Services;
-using System;
-using System.Threading.Tasks;
-
-namespace Task_Management.Services
+﻿namespace Task_Management.Services
 {
     public interface IAppNotificationService
     {

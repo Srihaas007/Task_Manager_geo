@@ -1,10 +1,4 @@
-﻿using Microsoft.Maui.Hosting;
-using Task_Management.Platforms;
-using Task_Management.Services;
-using Task_Management.Models;
-using Task_Management.ViewModels;
-using Task_Management.Views;
-using Microsoft.Maui;
+﻿using Task_Management.Platforms;
 
 namespace Task_Management;
 
